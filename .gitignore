@@ -1,0 +1,33 @@
+# Environment
+.env
+*.env
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyc
+.Python
+venv/
+env/
+.venv/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Test data (real ID images — never commit)
+test/
+tests/
+test_data/
+
+# Logs
+*.log
+
+# Large source files
+AAMVA-2020-DLID-Card-Design-Standard.pdf

@@ -1,0 +1,97 @@
+{
+  "state": "Arizona",
+  "abbreviation": "AZ",
+  "country": "USA",
+  "iin": "636004",
+  "standard_version": "AAMVA 2020",
+  "design_generation": {
+    "current": {
+      "label": "2023 redesign",
+      "issued_from": "2023-03-01",
+      "note": "New design. Cards issued before March 2023 remain valid until expiry."
+    },
+    "previous": {
+      "label": "pre-2023 design",
+      "issued_until": "2023-02-28",
+      "note": "Still in circulation — valid until expiry date on card"
+    }
+  },
+  "document_types": {
+    "DL": {
+      "label_on_card": "DRIVER LICENSE",
+      "real_id_compliant": true,
+      "notes": "AZ issues REAL ID compliant DLs. Star symbol in top right corner for REAL ID."
+    },
+    "ID": {
+      "label_on_card": "IDENTIFICATION CARD",
+      "real_id_compliant": true
+    },
+    "CDL": {
+      "label_on_card": "COMMERCIAL DRIVER LICENSE"
+    }
+  },
+  "rule_based_checks": {
+    "R_AZ_001": {
+      "id": "R_AZ_001", "severity": "FAIL",
+      "description": "Arizona DL/ID must show 'ARIZONA' in Zone I",
+      "check": "zone_I contains 'ARIZONA'"
+    },
+    "R_AZ_002": {
+      "id": "R_AZ_002", "severity": "FAIL",
+      "description": "REAL ID compliant AZ card must show gold star in top right",
+      "check": "if DDA == 'F' then gold_star_present == true",
+      "ai_assisted": true
+    },
+    "R_AZ_003": {
+      "id": "R_AZ_003", "severity": "FAIL",
+      "description": "Under-21 AZ DL must be vertical orientation",
+      "check": "if under_21 then orientation == 'vertical'"
+    },
+    "R_AZ_004": {
+      "id": "R_AZ_004", "severity": "WARN",
+      "description": "AZ DL number format: one letter + 8 digits (e.g. D12345678)",
+      "check": "id_number matches regex [A-Z][0-9]{8}",
+      "note": "Most AZ DL numbers. Some older formats may vary."
+    },
+    "R_AZ_005": {
+      "id": "R_AZ_005", "severity": "FAIL",
+      "description": "Barcode IIN must be 636004 for Arizona-issued documents",
+      "check": "barcode_iin == '636004'"
+    },
+    "R_AZ_006": {
+      "id": "R_AZ_006", "severity": "INFO",
+      "description": "AZ DL address should be an Arizona address unless out-of-state mailing address",
+      "check": "address_state == 'AZ' OR out_of_state_mailing_note_present"
+    }
+  },
+  "ai_check_items": {
+    "note": "State-specific visual checks — AI must evaluate these",
+    "items": [
+      "Grand Canyon / Arizona landscape background graphic present",
+      "Arizona state outline or saguaro cactus design element present",
+      "Correct color scheme for card generation (varies by year)",
+      "Ghost image of portrait in correct position",
+      "'ARIZONA' text prominent in Zone I",
+      "AZ MVD issuing authority watermark/logo present",
+      "Holographic overlay consistent with AZ design",
+      "Font style consistent with known AZ DL typeface",
+      "Under-21 card shows vertical orientation AND 'UNDER 21 UNTIL [date]' prominently"
+    ]
+  },
+  "field_label_conventions": {
+    "note": "AZ uses standard AAMVA abbreviations on card face",
+    "labels": {
+      "family_name": "LAST NAME",
+      "given_name": "FIRST NAME",
+      "dob": "DOB",
+      "issue_date": "ISS",
+      "expiry": "EXP",
+      "height": "HGT",
+      "weight": "WGT",
+      "eyes": "EYES",
+      "sex": "SEX",
+      "address": "ADDRESS",
+      "id_number": "DL" 
+    }
+  }
+}

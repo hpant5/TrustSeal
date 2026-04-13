@@ -1,0 +1,130 @@
+{
+  "standard": "ICAO Doc 9303 Machine Readable Travel Documents",
+  "edition": "8th Edition, 2021",
+  "applies_to": "US Passport (and all ICAO member state passports)",
+  "source": "ICAO Doc 9303 Parts 1-9 + US State Department specifications",
+  "note": "Passport standard is separate from AAMVA. Uses MRZ not PDF417.",
+
+  "physical": {
+    "booklet_page_size_mm": { "width": 125, "height": 88 },
+    "data_page": "inside front cover or page 2",
+    "material": "polycarbonate data page (US)"
+  },
+
+  "document_types": {
+    "P": "regular passport",
+    "PC": "passport card",
+    "note": "US also issues passport cards (credit-card size, limited use)"
+  },
+
+  "mandatory_fields": [
+    { "label": "Surname", "mrz_field": "primary_identifier", "visual_label": "SURNAME" },
+    { "label": "Given names", "mrz_field": "secondary_identifier", "visual_label": "GIVEN NAMES" },
+    { "label": "Nationality", "visual_label": "NATIONALITY", "us_value": "UNITED STATES OF AMERICA" },
+    { "label": "Date of birth", "format": "DD MMM YYYY (visual) / YYMMDD (MRZ)", "visual_label": "DATE OF BIRTH" },
+    { "label": "Sex", "visual_label": "SEX", "allowed_values": ["M", "F", "<"] },
+    { "label": "Place of birth", "visual_label": "PLACE OF BIRTH" },
+    { "label": "Date of issue", "format": "DD MMM YYYY", "visual_label": "DATE OF ISSUE" },
+    { "label": "Date of expiration", "format": "DD MMM YYYY", "visual_label": "DATE OF EXPIRATION" },
+    { "label": "Passport number", "visual_label": "PASSPORT NO." },
+    { "label": "Portrait photo", "location": "upper right of data page" },
+    { "label": "Signature", "location": "below portrait" },
+    { "label": "Issuing authority", "visual_label": "ISSUING AUTHORITY" }
+  ],
+
+  "mrz": {
+    "type": "TD3 (2-line, 44 chars each)",
+    "location": "bottom of data page",
+    "line_1": {
+      "positions": {
+        "1": "Document type (P)",
+        "2": "Document subtype or filler",
+        "3-5": "Issuing country (USA)",
+        "6-44": "Name (primary<<secondary identifier)"
+      }
+    },
+    "line_2": {
+      "positions": {
+        "1-9": "Passport number",
+        "10": "Check digit",
+        "11-13": "Nationality",
+        "14-19": "Date of birth (YYMMDD)",
+        "20": "Check digit",
+        "21": "Sex (M/F/<)",
+        "22-27": "Date of expiry (YYMMDD)",
+        "28": "Check digit",
+        "29-42": "Personal number or filler",
+        "43": "Check digit",
+        "44": "Overall check digit"
+      }
+    }
+  },
+
+  "us_passport_specifics": {
+    "issuing_authority": "U.S. Department of State",
+    "passport_number_format": "2 letters + 7 digits (e.g. AB1234567) — current format",
+    "validity": {
+      "adult_years": 10,
+      "minor_under_16_years": 5
+    },
+    "cover_color": "navy blue",
+    "chip": "biometric chip on data page (e-passport)",
+    "eagle_watermark": "visible on data page background"
+  },
+
+  "verification_rules": {
+    "R_PP_001": {
+      "id": "R_PP_001", "severity": "FAIL",
+      "description": "Document type must be P in MRZ position 1",
+      "check": "mrz_line1[0] == 'P'"
+    },
+    "R_PP_002": {
+      "id": "R_PP_002", "severity": "FAIL",
+      "description": "Issuing country must be USA for US passport",
+      "check": "mrz_line1[2:5] == 'USA'"
+    },
+    "R_PP_003": {
+      "id": "R_PP_003", "severity": "FAIL",
+      "description": "MRZ check digits must be valid",
+      "check": "validate_mrz_check_digits(mrz_line2)"
+    },
+    "R_PP_004": {
+      "id": "R_PP_004", "severity": "FAIL",
+      "description": "Passport must not be expired",
+      "check": "expiry_date >= today"
+    },
+    "R_PP_005": {
+      "id": "R_PP_005", "severity": "WARN",
+      "description": "Passport expires within 6 months — many countries require 6-month validity",
+      "check": "days_until_expiry >= 180"
+    },
+    "R_PP_006": {
+      "id": "R_PP_006", "severity": "FAIL",
+      "description": "MRZ name must match printed name",
+      "check": "mrz_name matches printed SURNAME and GIVEN NAMES"
+    },
+    "R_PP_007": {
+      "id": "R_PP_007", "severity": "FAIL",
+      "description": "MRZ DOB must match printed DOB",
+      "check": "mrz_dob matches printed date of birth"
+    },
+    "R_PP_008": {
+      "id": "R_PP_008", "severity": "FAIL",
+      "description": "Passport number format: 2 letters + 7 digits",
+      "check": "passport_number matches regex [A-Z]{2}[0-9]{7}"
+    }
+  },
+
+  "ai_check_items": [
+    "US eagle emblem / Great Seal present on data page",
+    "Holographic laminate on data page (diffractive pattern)",
+    "Gold foil or OVD element present",
+    "Portrait photo meets ICAO standards (white/light background, forward facing)",
+    "Ghost image of portrait present",
+    "Microprinting on background",
+    "Signature present and not blank",
+    "Font and layout consistent with US State Department design",
+    "No signs of photo substitution or data tampering",
+    "Navy blue cover with gold 'UNITED STATES OF AMERICA' text"
+  ]
+}

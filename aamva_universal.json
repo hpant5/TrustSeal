@@ -1,0 +1,400 @@
+{
+  "standard": "AAMVA DL/ID Card Design Standard",
+  "version": "2020 Ver 1.0",
+  "source": "AAMVA 2020 DL/ID Card Design Standard (125 pages)",
+  "applies_to": "All US states and Canadian provinces",
+  "last_updated": "2020-10-08",
+
+  "physical": {
+    "standard": "ISO/IEC 7810 ID-1",
+    "dimensions_mm": { "width": 85.6, "height": 53.98, "thickness": 0.76 },
+    "orientation": {
+      "over_21": "horizontal",
+      "under_21": "vertical",
+      "note": "Horizontal mandatory for US over-21. Vertical mandatory for US under-21."
+    }
+  },
+
+  "zones": {
+    "zone_I": {
+      "location": "top strip of portrait side",
+      "contains": ["issuing jurisdiction name", "document type label"],
+      "document_type_labels": [
+        "DRIVER LICENSE", "DRIVER'S LICENSE", "DRIVER LICENCE",
+        "COMMERCIAL DRIVER'S LICENSE", "CDL",
+        "IDENTIFICATION CARD"
+      ],
+      "background_color_recommendation": {
+        "DL": "30% tint Pantone 198 (red/pink)",
+        "ID": "30% tint Pantone 368 (green)"
+      }
+    },
+    "zone_II": {
+      "location": "main data area, portrait side",
+      "contains": "all human-readable text fields"
+    },
+    "zone_III": {
+      "location": "LEFT side of portrait side",
+      "contains": "portrait photo",
+      "portrait_rules": {
+        "side": "LEFT — mandatory, no exceptions",
+        "face_size_percent_of_zone": "70-80%",
+        "background": "uniform light blue or white",
+        "orientation": "crown at top, facing forward",
+        "color": "true color (unless laser engraving)",
+        "border": "NO border or frame allowed"
+      }
+    },
+    "zone_IV": {
+      "location": "back of card",
+      "contains": ["vehicle classification descriptions", "restriction/endorsement codes", "optional jurisdiction fields"]
+    },
+    "zone_V": {
+      "location": "back of card, bottom area",
+      "contains": "PDF417 barcode (mandatory) + optional additional MRTs",
+      "barcode_max_height_mm": 30.78
+    }
+  },
+
+  "mandatory_human_readable_fields": [
+    {
+      "ref": "a", "label": "Family name", "abbreviation": "Last name",
+      "zone": "II", "card_type": "both",
+      "format": "V40ANS", "rule": "printed on portrait side"
+    },
+    {
+      "ref": "b", "label": "Given names", "abbreviation": "First + middle names",
+      "zone": "II", "card_type": "both",
+      "format": "V80ANS"
+    },
+    {
+      "ref": "c", "label": "Date of birth", "abbreviation": "DOB",
+      "zone": "II", "card_type": "both",
+      "format": "MM/DD/CCYY (US) or CCYY/MM/DD (Canada)",
+      "length": "F10NS"
+    },
+    {
+      "ref": "d", "label": "Date of Issue", "abbreviation": "ISS",
+      "zone": "II", "card_type": "both",
+      "format": "MM/DD/CCYY (US)",
+      "length": "F10NS"
+    },
+    {
+      "ref": "e", "label": "Date of expiry", "abbreviation": "EXP",
+      "zone": "II", "card_type": "both",
+      "format": "MM/DD/CCYY (US)",
+      "length": "F10NS"
+    },
+    {
+      "ref": "f", "label": "Customer identifier", "abbreviation": "ID number",
+      "zone": "II", "card_type": "both",
+      "format": "V25ANS"
+    },
+    {
+      "ref": "g", "label": "Document discriminator", "abbreviation": "DD",
+      "zone": "II", "card_type": "both",
+      "format": "V25ANS",
+      "rule": "uniquely identifies this specific document issuance"
+    },
+    {
+      "ref": "h", "label": "Portrait", "zone": "III",
+      "card_type": "both", "format": "Image"
+    },
+    {
+      "ref": "i", "label": "Signature", "zone": "II or III",
+      "card_type": "both", "format": "Image",
+      "rule": "may overlap portrait if in zone III"
+    },
+    {
+      "ref": "j", "label": "Cardholder address", "zone": "II",
+      "card_type": "both", "format": "V108ANS"
+    },
+    {
+      "ref": "k", "label": "Vehicle classifications", "zone": "II/IV",
+      "card_type": "DL only", "format": "V6ANS"
+    },
+    {
+      "ref": "l", "label": "Endorsements", "abbreviation": "END",
+      "zone": "II/IV", "card_type": "DL only", "format": "V5ANS"
+    },
+    {
+      "ref": "m", "label": "Restrictions", "zone": "II/IV",
+      "card_type": "DL only", "format": "V12ANS",
+      "rule": "must show NONE if no restrictions"
+    },
+    {
+      "ref": "n", "label": "Cardholder sex", "abbreviation": "SEX",
+      "zone": "II", "card_type": "both",
+      "format": "F1A", "allowed_values": ["M", "F", "X"]
+    },
+    {
+      "ref": "o", "label": "Height", "abbreviation": "HGT",
+      "zone": "II", "card_type": "both",
+      "format": "F6ANS",
+      "us_format": "feet-inches e.g. 6'-01\"",
+      "canada_format": "centimeters e.g. 181 cm"
+    },
+    {
+      "ref": "p", "label": "Eye color", "abbreviation": "EYES",
+      "zone": "II", "card_type": "both",
+      "format": "F3A",
+      "allowed_values": ["BLU", "BRO", "BLK", "HAZ", "GRN", "GRY", "PNK", "MAR", "DIC"]
+    }
+  ],
+
+  "optional_human_readable_fields": [
+    { "ref": "a", "label": "Hair color", "abbreviation": "HAIR", "zone": "II", "format": "V12A" },
+    { "ref": "b", "label": "Place of birth", "zone": "II", "format": "V33A" },
+    { "ref": "f", "label": "Weight", "abbreviation": "WGT", "zone": "II", "format": "F6ANS",
+      "us_format": "pounds e.g. 185 lb", "canada_format": "kg e.g. 084 kg" },
+    { "ref": "g", "label": "Name suffix", "zone": "II", "format": "V5ANS",
+      "allowed_values": ["JR", "SR", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX"] },
+    { "ref": "j", "label": "Under 18 Until", "zone": "II", "format": "F10NS" },
+    { "ref": "k", "label": "Under 19 Until", "zone": "II", "format": "F10NS" },
+    { "ref": "l", "label": "Under 21 Until", "zone": "II", "format": "F10NS" },
+    { "ref": "m", "label": "Organ Donor", "zone": "II", "format": "Image+V20ANS",
+      "rule": "heart icon required if present" },
+    { "ref": "n", "label": "Veteran Indicator", "zone": "II/IV", "format": "F7A",
+      "rule": "word VETERAN required" }
+  ],
+
+  "barcode": {
+    "type": "PDF417",
+    "location": "Zone V, back of card",
+    "mandatory": true,
+    "compliance_indicator": "@",
+    "data_element_separator": "LF (ASCII 10)",
+    "record_separator": "RS (ASCII 30)",
+    "segment_terminator": "CR (ASCII 13)",
+    "file_type": "ANSI",
+    "subfile_types": {
+      "DL": "driver license",
+      "ID": "non-driver identification card",
+      "EN": "enhanced driver license",
+      "ZX": "jurisdiction-specific (Z + first letter of jurisdiction)"
+    },
+    "aamva_version_map": {
+      "01": "AAMVA DL/ID-2000",
+      "02": "CDS 2003",
+      "03": "CDS 2005",
+      "04": "CDS 2009",
+      "05": "CDS 2010",
+      "06": "CDS 2011",
+      "07": "CDS 2012",
+      "08": "CDS 2013",
+      "09": "CDS 2016",
+      "10": "CDS 2020 (current)"
+    },
+    "mandatory_elements": {
+      "DCA": { "name": "Vehicle class", "type": "DL", "format": "V6ANS" },
+      "DCB": { "name": "Restriction codes", "type": "DL", "format": "V12ANS" },
+      "DCD": { "name": "Endorsement codes", "type": "DL", "format": "V5ANS" },
+      "DCS": { "name": "Family name", "type": "both", "format": "V40ANS" },
+      "DAC": { "name": "First name", "type": "both", "format": "V40ANS" },
+      "DAD": { "name": "Middle name(s)", "type": "both", "format": "V40ANS" },
+      "DBD": { "name": "Issue date", "type": "both", "format": "F8N", "us_format": "MMDDCCYY" },
+      "DBB": { "name": "Date of birth", "type": "both", "format": "F8N", "us_format": "MMDDCCYY" },
+      "DBA": { "name": "Expiry date", "type": "both", "format": "F8N", "us_format": "MMDDCCYY" },
+      "DBC": { "name": "Sex", "type": "both", "format": "F1N", "values": {"1": "male", "2": "female", "9": "not specified"} },
+      "DAY": { "name": "Eye color", "type": "both", "format": "F3A" },
+      "DAU": { "name": "Height", "type": "both", "format": "F6ANS", "us_example": "073 in (for 6'1\")" },
+      "DAG": { "name": "Street address", "type": "both", "format": "V35ANS" },
+      "DAI": { "name": "City", "type": "both", "format": "V20ANS" },
+      "DAJ": { "name": "State code", "type": "both", "format": "F2A" },
+      "DAK": { "name": "ZIP code", "type": "both", "format": "F11ANS" },
+      "DAQ": { "name": "Customer ID number", "type": "both", "format": "V25ANS" },
+      "DCF": { "name": "Document discriminator", "type": "both", "format": "V25ANS" },
+      "DCG": { "name": "Country", "type": "both", "format": "F3A", "values": {"USA": "United States", "CAN": "Canada"} },
+      "DDE": { "name": "Family name truncation", "type": "both", "format": "F1A", "values": {"T": "truncated", "N": "not truncated", "U": "unknown"} },
+      "DDF": { "name": "First name truncation", "type": "both", "format": "F1A" },
+      "DDG": { "name": "Middle name truncation", "type": "both", "format": "F1A" }
+    },
+    "optional_elements": {
+      "DAH": { "name": "Street address 2", "format": "V35ANS" },
+      "DAZ": { "name": "Hair color", "format": "V12A" },
+      "DCI": { "name": "Place of birth", "format": "V33A" },
+      "DCJ": { "name": "Audit information", "format": "V25ANS" },
+      "DCK": { "name": "Inventory control number", "format": "V25ANS" },
+      "DCU": { "name": "Name suffix", "format": "V5ANS" },
+      "DCE": { "name": "Weight range", "format": "F1N", "values": {
+        "0": "up to 70 lbs", "1": "71-100 lbs", "2": "101-130 lbs",
+        "3": "131-160 lbs", "4": "161-190 lbs", "5": "191-220 lbs",
+        "6": "221-250 lbs", "7": "251-280 lbs", "8": "281-320 lbs", "9": "321+ lbs"
+      }},
+      "DAW": { "name": "Weight (pounds)", "format": "F3N" },
+      "DDA": { "name": "Compliance type", "format": "F1A", "values": {"F": "DHS compliant", "N": "non-compliant"} },
+      "DDB": { "name": "Card revision date", "format": "F8N" },
+      "DDC": { "name": "HAZMAT endorsement expiry", "format": "F8N" },
+      "DDD": { "name": "Limited duration indicator", "format": "F1N", "values": {"1": "temporary lawful status"} },
+      "DDH": { "name": "Under 18 until", "format": "F8N" },
+      "DDI": { "name": "Under 19 until", "format": "F8N" },
+      "DDJ": { "name": "Under 21 until", "format": "F8N" },
+      "DDK": { "name": "Organ donor indicator", "format": "F1N", "values": {"1": "organ donor"} },
+      "DDL": { "name": "Veteran indicator", "format": "F1N", "values": {"1": "veteran"} }
+    }
+  },
+
+  "mandatory_security_features": {
+    "card_body": {
+      "required_count": "1 mandatory + 1 optional minimum",
+      "mandatory": ["multi-layer card construction"],
+      "optional_examples": ["window element", "embedded thread", "card core inclusions"]
+    },
+    "security_design": {
+      "required_count": "2 mandatory + 2 optional minimum",
+      "mandatory": ["guilloche design", "no CMYK-only printing (at least 2 special colors)"],
+      "optional_examples": ["microprinting", "rainbow printing", "laser perforation"]
+    },
+    "security_inks": {
+      "required_count": "1 mandatory + 2 optional minimum",
+      "mandatory": ["UV fluorescent ink (365nm wavelength)"],
+      "optional_examples": ["IR ink", "color-shifting ink", "phosphorescent ink"]
+    },
+    "personalized_data_protection": {
+      "required_count": "4 mandatory + 1 optional minimum",
+      "mandatory": [
+        "digital imaging technology for portrait/data",
+        "laminate or overlay protecting portrait side",
+        "PDF417 barcode",
+        "security background overlapping portrait area"
+      ],
+      "optional_examples": ["optical variable element (OVE/hologram)", "redundant personalized data"]
+    },
+    "level_3_feature": {
+      "required": true,
+      "note": "At least 1 forensic-level feature required. Details not disclosed in this standard."
+    }
+  },
+
+  "verification_rules": {
+    "rule_001": {
+      "id": "R001", "severity": "FAIL",
+      "description": "Portrait must be on LEFT side (Zone III)",
+      "check": "portrait_position == 'left'"
+    },
+    "rule_002": {
+      "id": "R002", "severity": "FAIL",
+      "description": "Document must have PDF417 barcode on back",
+      "check": "barcode_present == true"
+    },
+    "rule_003": {
+      "id": "R003", "severity": "FAIL",
+      "description": "Barcode must start with @ compliance indicator",
+      "check": "barcode_data.startswith('@')"
+    },
+    "rule_004": {
+      "id": "R004", "severity": "FAIL",
+      "description": "Over-21 DL must be horizontal orientation",
+      "check": "if age > 21 then orientation == 'horizontal'"
+    },
+    "rule_005": {
+      "id": "R005", "severity": "FAIL",
+      "description": "Under-21 DL must be vertical orientation (US)",
+      "check": "if age < 21 and country == 'USA' then orientation == 'vertical'"
+    },
+    "rule_006": {
+      "id": "R006", "severity": "FAIL",
+      "description": "Date of birth format must be MM/DD/CCYY (US)",
+      "check": "dob matches regex MM/DD/CCYY"
+    },
+    "rule_007": {
+      "id": "R007", "severity": "FAIL",
+      "description": "Document must not be expired",
+      "check": "expiry_date >= today"
+    },
+    "rule_008": {
+      "id": "R008", "severity": "WARN",
+      "description": "Document expires within 30 days — notary should flag",
+      "check": "days_until_expiry >= 0 and days_until_expiry <= 30"
+    },
+    "rule_009": {
+      "id": "R009", "severity": "FAIL",
+      "description": "Sex field must be M, F, or X only",
+      "check": "sex in ['M', 'F', 'X']"
+    },
+    "rule_010": {
+      "id": "R010", "severity": "FAIL",
+      "description": "Eye color must use AAMVA D20 3-letter codes",
+      "check": "eye_color in ['BLU','BRO','BLK','HAZ','GRN','GRY','PNK','MAR','DIC']"
+    },
+    "rule_011": {
+      "id": "R011", "severity": "FAIL",
+      "description": "Barcode mandatory field DAQ (ID number) must be present",
+      "check": "barcode_contains('DAQ')"
+    },
+    "rule_012": {
+      "id": "R012", "severity": "FAIL",
+      "description": "Barcode mandatory field DCS (family name) must be present",
+      "check": "barcode_contains('DCS')"
+    },
+    "rule_013": {
+      "id": "R013", "severity": "FAIL",
+      "description": "Barcode mandatory field DBB (DOB) must be present",
+      "check": "barcode_contains('DBB')"
+    },
+    "rule_014": {
+      "id": "R014", "severity": "FAIL",
+      "description": "Barcode DOB (DBB) format must be MMDDCCYY for US",
+      "check": "barcode['DBB'] matches F8N MMDDCCYY"
+    },
+    "rule_015": {
+      "id": "R015", "severity": "FAIL",
+      "description": "Barcode name must match printed name on card face",
+      "check": "barcode['DCS'] matches printed family name AND barcode['DAC'] matches printed first name"
+    },
+    "rule_016": {
+      "id": "R016", "severity": "FAIL",
+      "description": "Barcode DOB must match printed DOB on card face",
+      "check": "barcode['DBB'] matches printed DOB (allowing format conversion)"
+    },
+    "rule_017": {
+      "id": "R017", "severity": "FAIL",
+      "description": "Barcode ID number (DAQ) must match printed ID number",
+      "check": "barcode['DAQ'] matches printed customer ID"
+    },
+    "rule_018": {
+      "id": "R018", "severity": "WARN",
+      "description": "DDA field = N means card is NOT DHS/REAL ID compliant",
+      "check": "if barcode['DDA'] present and value == 'N' then flag non-compliant"
+    },
+    "rule_019": {
+      "id": "R019", "severity": "WARN",
+      "description": "DDD field = 1 means limited duration (temporary lawful status)",
+      "check": "if barcode['DDD'] == '1' then flag as temporary document"
+    },
+    "rule_020": {
+      "id": "R020", "severity": "INFO",
+      "description": "Document type label in Zone I must be standard wording",
+      "check": "zone_I_label in standard document_type_labels"
+    }
+  },
+
+  "issuer_identification_numbers": {
+    "note": "6-digit IIN in barcode header uniquely identifies issuing state. Contact AAMVA for full list.",
+    "examples": {
+      "636000": "Virginia",
+      "636004": "Arizona",
+      "636014": "California",
+      "636020": "New York",
+      "636023": "Texas",
+      "636026": "Florida"
+    }
+  },
+
+  "ai_check_items": {
+    "note": "These CANNOT be rule-checked from this standard alone — require AI visual analysis",
+    "items": [
+      "Guilloche pattern present and not obviously printed/photocopied",
+      "Portrait photo matches person presenting document",
+      "UV fluorescent elements (requires UV light — not checkable from photo)",
+      "State-specific background design and colors",
+      "Holographic overlay / optical variable element",
+      "Ghost image present and matches main portrait",
+      "Microprinting legibility",
+      "Signs of photo substitution or data tampering",
+      "Card material texture and thickness",
+      "Font consistency and size across all fields",
+      "JPEG artifact anomalies suggesting digital editing"
+    ]
+  }
+}
