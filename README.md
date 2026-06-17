@@ -143,4 +143,3 @@ Tested with Arizona Driver Licenses. The system:
 
 ---
 
-*Built in 24 hours at VillageHacks 2026, ASU Tempe*
