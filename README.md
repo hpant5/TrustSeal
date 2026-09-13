@@ -43,6 +43,22 @@ Upload a second document (utility bill, bank statement, loan doc). Same two-agen
 
 ## Architecture
 
+```mermaid
+flowchart TD
+    A[ID document image] --> B[Claude agent 1<br/>fields + layout vs AAMVA 2020]
+    A --> C[Claude agent 2<br/>independent second pass]
+    A --> D[Local PDF417 decode<br/>zxing-cpp]
+    D --> E[Barcode payload<br/>ground truth]
+    B --> F{Agents agree?}
+    C --> F
+    F -->|yes| G[High confidence]
+    F -->|no| H[Judge agent<br/>re-reviews original image]
+    H --> G
+    G --> I[Rules engine<br/>+1 field match, -1 mismatch,<br/>scored against barcode]
+    E --> I
+    I --> J[Verdict and confidence]
+```
+
 ```
 notary_verify/
 ├── main.py            # FastAPI backend
