@@ -1,11 +1,11 @@
 # TrustSeal — AI-Powered ID Verification for Notaries
 
-The Application is live at : https://plasma-motivator-peso.ngrok-free.dev/static/index.html
+Summary:
+
+Multi-agent identity document verification against the AAMVA 2020 standard and ICAO Doc 9303. Independent Claude agents each analyse the document, a local PDF417 barcode decode provides ground truth, and a judge agent resolves disagreements between them. Built at VillageHacks 2026.
 
 
 **Built at VillageHacks 2026 · Notary Everyday Track**
-
-TrustSeal is a multi-provider AI pipeline that verifies identity documents for notaries — replacing the manual, inconsistent process of squinting at a driver's license with a structured, scored, auditable verification report.
 
 ---
 
